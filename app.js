@@ -14,7 +14,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 
 app.use(cookieSession({
-    maxAge: 1 * 60 * 60 * 1000,
+    maxAge: 60 * 60 * 1000,
     keys: [keys.session.cookieKey],
 }));
 
@@ -38,5 +38,5 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
 app.listen(3000, () => {
-    console.log('Listening on port 3000');
+    console.log('Listening on port 3001');
 });
