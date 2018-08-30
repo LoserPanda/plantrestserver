@@ -14,7 +14,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 
 app.use(cookieSession({
-    maxAge: 1 * 60 * 60 * 1000,
+    maxAge: 60 * 60 * 1000,
     keys: [keys.session.cookieKey],
 }));
 

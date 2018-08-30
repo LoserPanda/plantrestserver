@@ -22,7 +22,8 @@ connection.connect(err => {
 
     //GET ALL USERS
     router.get('/', authCheck, (req, res, next) => {
-        connection.query('SELECT * FROM users', (err, results) => {
+        console.log("uuseri lakaa", req.user, "palautettu uuuseri lol");
+        connection.query('SELECT * FROM users where userID = ?', [req.user.userID], (err, results) => {
             if (err) throw err;
             console.log(results);
             res.send(results);
