@@ -30,6 +30,16 @@ connection.connect(err => {
         });
     });
 
+    //TESTIKÄYTTÖÖÖÖNNN!!!!!!
+    router.get('/test', (req, res, next) => {
+        console.log("uuseri lakaa", req.user, "palautettu uuuseri lol");
+        connection.query('SELECT * FROM users', (err, results) => {
+            if (err) throw err;
+            console.log(results);
+            res.send(results);
+        });
+    });
+
     //GET USER BY ID
     router.get('/:userID', authCheck, (req, res, next) => {
         connection.query('SELECT * FROM users WHERE userID = ?', [req.params.userID], (err, results) => {

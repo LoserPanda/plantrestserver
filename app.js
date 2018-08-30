@@ -38,5 +38,5 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
 app.listen(3000, () => {
-    console.log('Listening on port 3000');
+    console.log('Listening on port 3001');
 });
