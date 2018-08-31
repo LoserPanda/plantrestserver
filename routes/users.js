@@ -41,7 +41,7 @@ connection.connect(err => {
 
     //POST NEW USER TO THE DATABASE
     router.post('/', (req, res, next) => {
-        connection.query('INSERT INTO users (UID, email) VALUES (?, ?)', [req.body.UID, req.body.email], (err, results) => {
+        connection.query('INSERT INTO users (userID, email) VALUES (?, ?) ON DUPLICATE KEY UPDATE userID = ?, email = ?', [req.body.userID, req.body.email, req.body.userID, req.body.email], (err, results) => {
             if (err) throw err;
             console.log(results);
             res.send(results);
