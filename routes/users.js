@@ -40,7 +40,7 @@ connection.connect(err => {
     });
 
     //POST NEW USER TO THE DATABASE
-    router.post('/', (req, res, next) => {
+    router.post('/add', (req, res, next) => {
         connection.query('INSERT INTO users (UID, email) VALUES (?, ?)', [req.body.UID, req.body.email], (err, results) => {
             if (err) throw err;
             console.log(results);
