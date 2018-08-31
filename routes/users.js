@@ -11,29 +11,19 @@ connection.connect(err => {
     if (err) throw err;
     console.log('Connected to the database');
 
-    const authCheck = (req, res, next) => {
-        if (!req.user) {
-            res.redirect('/auth/login');
-        } else {
-            console.log(req.user, "jou");
-            next();
-        }
-    };
+    // const authCheck = (req, res, next) => {
+    //     if (!req.user) {
+    //         res.redirect('/auth/login');
+    //     } else {
+    //         console.log(req.user, "jou");
+    //         next();
+    //     }
+    // };
 
     //GET ALL USERS
-    router.get('/', authCheck, (req, res, next) => {
+    router.get('/', (req, res, next) => {
         console.log("uuseri lakaa", req.user, "palautettu uuuseri lol");
-        connection.query('SELECT * FROM users where userID = ?', [req.user.userID], (err, results) => {
-            if (err) throw err;
-            console.log(results);
-            res.send(results);
-        });
-    });
-
-    //TESTIKÄYTTÖÖÖÖNNN!!!!!!
-    router.get('/test', (req, res, next) => {
-        console.log("uuseri lakaa", req.user, "palautettu uuuseri lol");
-        connection.query('SELECT * FROM users', (err, results) => {
+        connection.query('SELECT * FROM users',(err, results) => {
             if (err) throw err;
             console.log(results);
             res.send(results);
@@ -41,7 +31,7 @@ connection.connect(err => {
     });
 
     //GET USER BY ID
-    router.get('/:userID', authCheck, (req, res, next) => {
+    router.get('/:userID', (req, res, next) => {
         connection.query('SELECT * FROM users WHERE userID = ?', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
@@ -50,8 +40,8 @@ connection.connect(err => {
     });
 
     //POST NEW USER TO THE DATABASE
-    router.post('/', authCheck, (req, res, next) => {
-        connection.query('INSERT INTO users (username, email) VALUES (?, ?)', [req.body.username, req.body.email], (err, results) => {
+    router.post('/', (req, res, next) => {
+        connection.query('INSERT INTO users (UID, email) VALUES (?, ?)', [req.body.UID, req.body.email], (err, results) => {
             if (err) throw err;
             console.log(results);
             res.send(results);
