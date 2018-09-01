@@ -22,8 +22,8 @@ connection.connect(err => {
     });
 
     //GET USER BY ID
-    router.get('/:userID', (req, res, next) => {
-        connection.query('SELECT * FROM users WHERE userID = ?', [req.params.userID], (err, results) => {
+    router.get('/email/:userID', (req, res, next) => {
+        connection.query('SELECT email FROM users WHERE userID = ?', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
