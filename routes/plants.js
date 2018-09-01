@@ -20,15 +20,15 @@ connection.connect(err => {
     //         res.send(results);
     //     });
     // });
-    //
-    // //GET USER BY ID
-    // router.get('/email/:userID', (req, res, next) => {
-    //     connection.query('SELECT email FROM users WHERE userID = ?', [req.params.userID], (err, results) => {
-    //         if (err) throw err;
-    //         //console.log(results);
-    //         res.send(results);
-    //     });
-    // });
+
+    //GET PLANTS BY USER ID
+    router.get('/:userID', (req, res, next) => {
+        connection.query('SELECT name FROM plants WHERE userID = ?', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
 
     //POST NEW PLANT TO THE DATABASE
     router.post('/', (req, res, next) => {
