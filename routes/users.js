@@ -11,15 +11,6 @@ connection.connect(err => {
     if (err) throw err;
     console.log('Connected to the database');
 
-    // const authCheck = (req, res, next) => {
-    //     if (!req.user) {
-    //         res.redirect('/auth/login');
-    //     } else {
-    //         console.log(req.user, "jou");
-    //         next();
-    //     }
-    // };
-
     //GET ALL USERS
     router.get('/', (req, res, next) => {
         console.log("uuseri lakaa", req.user, "palautettu uuuseri lol");

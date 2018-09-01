@@ -11,15 +11,6 @@ connection.connect(err => {
     if (err) throw err;
     console.log('Connected to the database');
 
-    // const authCheck = (req, res, next) => {
-    //     if (!req.user) {
-    //         res.redirect('/auth/login');
-    //     } else {
-    //         console.log(req.user, "jou");
-    //         next();
-    //     }
-    // };
-
     //GET ALL SENSORS
     router.get('/', (req, res, next) => {
         connection.query('SELECT * FROM sensors', (err, results) => {
