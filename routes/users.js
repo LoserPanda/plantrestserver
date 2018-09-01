@@ -25,7 +25,6 @@ connection.connect(err => {
     router.get('/email/:userID', (req, res, next) => {
         connection.query('SELECT email FROM users WHERE userID = ?', [req.params.userID], (err, results) => {
             if (err) throw err;
-            //console.log(results);
             res.send(results);
         });
     });
