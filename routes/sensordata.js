@@ -20,18 +20,18 @@ connection.connect(err => {
     //     });
     // });
 
-    //GET SENSORDATA AND SENSORS
-    router.get('/byuserid/:userID', (req, res, next) => {
-        connection.query('SELECT sensordata.time, sensordata.light, sensordata.humidity, sensordata.temperature, sensordata.soilmoisture FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ?', [req.params.userID], (err, results) => {
-            if (err) throw err;
-            //console.log(results);
-            res.send(results);
-        });
-    });
+    // //GET SENSORDATA AND SENSORS
+    // router.get('/byuserid/:userID', (req, res, next) => {
+    //     connection.query('SELECT sensordata.time, sensordata.light, sensordata.humidity, sensordata.temperature, sensordata.soilmoisture FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ?', [req.params.userID], (err, results) => {
+    //         if (err) throw err;
+    //         //console.log(results);
+    //         res.send(results);
+    //     });
+    // });
 
     //GET FILTERED SENSORDATA AND SENSORS
-    router.get('/jou/:userID', (req, res, next) => {
-        connection.query('SELECT sensordata.time, sensordata.light, sensordata.humidity, sensordata.temperature, sensordata.soilmoisture FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ?', [req.params.userID], (err, results) => {
+    router.get('/byuserid/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, AVG(sensordata.soilmoisture) AS "soilmoisture", AVG(sensordata.light) AS "light", AVG(sensordata.temperature) AS "temperature", AVG(sensordata.humidity) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY HOUR(time)', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
