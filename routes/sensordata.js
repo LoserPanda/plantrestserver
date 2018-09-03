@@ -29,9 +29,36 @@ connection.connect(err => {
     //     });
     // });
 
-    //GET FILTERED SENSORDATA AND SENSORS
-    router.get('/byuserid/:userID', (req, res, next) => {
-        connection.query('SELECT sensordata.time, AVG(sensordata.soilmoisture) AS "soilmoisture", AVG(sensordata.light) AS "light", AVG(sensordata.temperature) AS "temperature", AVG(sensordata.humidity) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY HOUR(time)', [req.params.userID], (err, results) => {
+    //GET FILTERED SENSORDATA AND SENSORS GROUP BY HOUR || TOIMII
+    router.get('/hour/byuserid/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, AVG(sensordata.soilmoisture) AS "soilmoisture", AVG(sensordata.light) AS "light", AVG(sensordata.temperature) AS "temperature", AVG(sensordata.humidity) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time), MONTH(time), DAY(time), HOUR(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
+    //GET FILTERED SENSORDATA AND SENSORS GROUP BY DAY || TOIMII
+    router.get('/day/byuserid/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, AVG(sensordata.soilmoisture) AS "soilmoisture", AVG(sensordata.light) AS "light", AVG(sensordata.temperature) AS "temperature", AVG(sensordata.humidity) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time), MONTH(time), DAY(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
+    //GET FILTERED SENSORDATA AND SENSORS GROUP BY MONTH || TOIMII
+    router.get('/month/byuserid/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, AVG(sensordata.soilmoisture) AS "soilmoisture", AVG(sensordata.light) AS "light", AVG(sensordata.temperature) AS "temperature", AVG(sensordata.humidity) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time), MONTH(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
+    //GET FILTERED SENSORDATA AND SENSORS GROUP BY YEAR || TOIMII
+    router.get('/year/byuserid/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, AVG(sensordata.soilmoisture) AS "soilmoisture", AVG(sensordata.light) AS "light", AVG(sensordata.temperature) AS "temperature", AVG(sensordata.humidity) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
