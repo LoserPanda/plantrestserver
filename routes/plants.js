@@ -23,7 +23,7 @@ connection.connect(err => {
 
     //GET PLANTS BY USER ID
     router.get('/:userID', (req, res, next) => {
-        connection.query('SELECT name FROM plants WHERE userID = ?', [req.params.userID], (err, results) => {
+        connection.query('SELECT * FROM plants WHERE userID = ?', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);

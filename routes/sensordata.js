@@ -29,6 +29,15 @@ connection.connect(err => {
         });
     });
 
+    //GET FILTERED SENSORDATA AND SENSORS
+    router.get('/jou/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, sensordata.light, sensordata.humidity, sensordata.temperature, sensordata.soilmoisture FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ?', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
     // //GET SENSORDATA BY ID
     // router.get('/:sensorID', (req, res, next) => {
     //     connection.query('SELECT * FROM sensordata WHERE sensorID = ?', [req.params.sensorID], (err, results) => {
