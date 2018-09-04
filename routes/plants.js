@@ -47,7 +47,7 @@ connection.connect(err => {
     });
 
     router.get('/getphoto/:userID', (req, res, next) => {
-        connection.query('SELECT name, photolink FROM plants INNER JOIN users ON users.userID=plants.userID WHERE users.userID = ?', [req.params.userID], (err, results) => {
+        connection.query('SELECT * FROM plants INNER JOIN users ON users.userID=plants.userID WHERE users.userID = ?', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
