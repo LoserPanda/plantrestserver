@@ -38,6 +38,14 @@ connection.connect(err => {
         });
     });
 
+    router.get('/getbyuserid/:userID', (req, res, next) => {
+        connection.query('SELECT soilAvg, lightAvg, temperatureAvg, humidityAvg FROM plants INNER JOIN users ON users.plantID=plants.plantID WHERE userID = ?', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
     //POST NEW PLANT TO THE DATABASE
     router.post('/', (req, res, next) => {
         connection.query('INSERT INTO plants (plantID, name, photolink, userID) VALUES (?, ?, ?, ?)', [req.body.plantID, req.body.name, req.body.photolink, req.body.userID], (err, results) => {
