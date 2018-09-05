@@ -54,6 +54,14 @@ connection.connect(err => {
         });
     });
 
+    router.get('/plantconditions/:userID', (req, res, next) => {
+        connection.query('SELECT * FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ?', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
     // //POST NEW PLANT TO THE DATABASE
     // router.post('/:userID', (req, res, next) => {
     //     connection.query('INSERT INTO plants (name, photolink, soilAvg, lightAvg, humidityAvg, temperatureAvg) VALUES (?, ?, ?, ?, ?, ?) INNER JOIN users ON users.plantID=plants.plantID WHERE userID = ?', [req.body.name, req.body.photolink, req.body.soilAvg, req.body.lightAvg, req.body.humidityAvg, req.body.temperatureAvg. req.params.userID], (err, results) => {
