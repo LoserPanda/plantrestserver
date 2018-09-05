@@ -62,6 +62,14 @@ connection.connect(err => {
             res.send(results);
         });
     });
+
+    router.get('/plantconditions/:userID', (req, res, next) => {
+        connection.query('SELECT * FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? ORDER BY time DESC LIMIT 1', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            res.send(results);
+        });
+    });
+
 });
 
 module.exports = router;
