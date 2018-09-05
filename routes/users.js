@@ -29,6 +29,14 @@ connection.connect(err => {
         });
     });
 
+//SPESSUHAKU
+    router.get('/all/:userID', (req, res, next) => {
+        connection.query('SELECT * FROM users JOIN plants WHERE users.userID = plants.userID AND users.userID = ?', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            res.send(results);
+        });
+    });
+
     //POST NEW USER TO THE DATABASE
     router.post('/', (req, res, next) => {
         connection.query('INSERT INTO users (userID, email) VALUES (?, ?) ON DUPLICATE KEY UPDATE userID = ?, email = ?', [req.body.userID, req.body.email, req.body.userID, req.body.email], (err, results) => {
