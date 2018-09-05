@@ -30,8 +30,17 @@ connection.connect(err => {
     // });
 
     //GET FILTERED SENSORDATA AND SENSORS GROUP BY HOUR || TOIMII
+    router.get('/minute/byuserid/:userID', (req, res, next) => {
+        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS humidity FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? AND time >= NOW() - INTERVAL 1 HOUR GROUP BY YEAR(time), MONTH(time), DAY(time), HOUR(time), MINUTE(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+            if (err) throw err;
+            //console.log(results);
+            res.send(results);
+        });
+    });
+
+    //GET FILTERED SENSORDATA AND SENSORS GROUP BY HOUR || TOIMII
     router.get('/hour/byuserid/:userID', (req, res, next) => {
-        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS humidity FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time), MONTH(time), DAY(time), HOUR(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS humidity FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? AND time >= NOW() - INTERVAL 1 DAY GROUP BY YEAR(time), MONTH(time), DAY(time), HOUR(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
@@ -40,7 +49,7 @@ connection.connect(err => {
 
     //GET FILTERED SENSORDATA AND SENSORS GROUP BY DAY || TOIMII
     router.get('/day/byuserid/:userID', (req, res, next) => {
-        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS humidity FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time), MONTH(time), DAY(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS humidity FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? AND time >= NOW() - INTERVAL 7 DAY GROUP BY YEAR(time), MONTH(time), DAY(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
@@ -49,7 +58,7 @@ connection.connect(err => {
 
     //GET FILTERED SENSORDATA AND SENSORS GROUP BY MONTH || TOIMII
     router.get('/month/byuserid/:userID', (req, res, next) => {
-        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? GROUP BY YEAR(time), MONTH(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
+        connection.query('SELECT sensordata.time, ROUND(AVG(sensordata.soilmoisture), 0) AS "soilmoisture", ROUND(AVG(sensordata.light), 0) AS "light", ROUND(AVG(sensordata.temperature), 0) AS "temperature", ROUND(AVG(sensordata.humidity), 0) AS "humidity" FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? AND time >= NOW() - INTERVAL 1 YEAR GROUP BY YEAR(time), MONTH(time) ORDER BY time ASC', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
