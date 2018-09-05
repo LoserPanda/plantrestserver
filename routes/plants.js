@@ -54,14 +54,14 @@ connection.connect(err => {
         });
     });
 
-    // //POST NEW PLANT TO THE DATABASE
-    // router.post('/:userID', (req, res, next) => {
-    //     connection.query('INSERT INTO plants (name, photolink, soilAvg, lightAvg, humidityAvg, temperatureAvg) VALUES (?, ?, ?, ?, ?, ?) INNER JOIN users ON users.plantID=plants.plantID WHERE userID = ?', [req.body.name, req.body.photolink, req.body.soilAvg, req.body.lightAvg, req.body.humidityAvg, req.body.temperatureAvg. req.params.userID], (err, results) => {
-    //         if (err) throw err;
-    //         console.log(results);
-    //         res.send(results);
-    //     });
-    // });
+    //POST NEW PLANT TO THE DATABASE
+    router.post('/update', (req, res, next) => {
+        connection.query('UPDATE plants SET name=?, photolink=?, soilAvg=?, lightAvg=?, humidityAvg=?, temperatureAvg=? WHERE plantID=?', [req.body.name, req.body.photolink, req.body.soilAvg, req.body.lightAvg, req.body.humidityAvg, req.body.temperatureAvg, req.body.plantID], (err, results) => {
+            if (err) throw err;
+            console.log(results);
+            res.send(results);
+        });
+    });
 });
 
 module.exports = router;
