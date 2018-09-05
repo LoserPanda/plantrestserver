@@ -55,7 +55,7 @@ connection.connect(err => {
     });
 
     router.get('/plantconditions/:userID', (req, res, next) => {
-        connection.query('SELECT * FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ?', [req.params.userID], (err, results) => {
+        connection.query('SELECT * FROM sensordata INNER JOIN sensors ON sensors.sensorID=sensordata.sensorID WHERE userID = ? ORDER BY time DESC LIMIT 1', [req.params.userID], (err, results) => {
             if (err) throw err;
             //console.log(results);
             res.send(results);
